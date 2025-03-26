@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangdong-Hong Kong-Macao Greater Bay Area</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #5ec2ff;
+            color: #fff;
+            font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .header-image {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            max-width: none;
+            height: auto;
+            object-fit: contain;
+            object-position: top;
+            z-index: -1;
+            opacity: 1;
+            display: block;
+        }
+
+        header {
+            height: auto;
+            position: relative;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            overflow: visible;
+            margin-bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-top: 64px;
+        }
+
+        header::after {
+            display: none;
+        }
+
+        header h1 {
+            display: none;
+        }
+
+        nav {
+            background-color: white;
+            padding: 0.5rem 4rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .nav-title {
+            font-size: 20px;
+            color: #333;
+            font-weight: normal;
+            white-space: nowrap;
+            margin-right: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            justify-content: flex-end;
+            flex: 1;
+            gap: 3rem;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            padding: 0 0.5rem;
+            font-weight: normal;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #4CAF50;
+            border-bottom-color: #4CAF50;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 0;
+            margin-top: 1px;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 18px;
+            transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+            color: #4CAF50;
+        }
+
+        .nav-link.home {
+            color: #4CAF50;
+        }
+
+        section {
+            padding: 2rem 0;
+            /* min-height: 400px; */
+        }
+
+        #home {
+            padding-top: 2rem;
+        }
+
+        #home h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-bottom: 2px solid rgba(44, 62, 80, 0.1);
+        }
+
+        /* 修改统一容器的基础样式 */
+        .introduction-content,
+        .section-content,
+        .flex-container,
+        .flourish-container,
+        .industry-image-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* 移除重复的样式定义 */
+        .introduction-content {
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            box-shadow: none;
+            margin-top: 0;
+            /* 移除重复的 max-width 和 padding 定义 */
+        }
+
+        .section-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            overflow: visible;
+        }
+
+        /* 修改图表容器的特殊样式 */
+        .flourish-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px; /* 与宽度相同，保持正方形 */
+            margin: 4rem; /* 增加上下边距，避免重叠 */
+            padding: 0 4rem; /* 与文字容器保持一致的内边距 */
+            position: relative;
+        }
+
+        /* 确保嵌入的图表填满容器 */
+        .flourish-embed {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 修改flex容器的特殊样式 */
+        .flex-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 4rem;
+            display: block;
+        }
+
+        .text-content {
+            width: 100%;
+            padding-right: 0;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+        }
+
+        .text-content .introduction-paragraph {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            padding: 0;
+        }
+
+        .chart-content {
+            width: 100%;
+        }
+
+        /* 移除其他容器中重复的宽度和内边距定义 */
+        #why-together .flourish-container,
+        #achievements .flourish-container {
+            height: 500px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* 确保图片容器也遵循相同的宽度规则 */
+        .bridge-image:not(.full-width),
+        .policy-image:not(.full-width) {
+            max-width: 1200px;
+            margin: 2rem auto;
+            width: 100%;
+            display: block;
+        }
+
+        .introduction-paragraph {
+            margin-bottom: 2rem;
+            text-indent: 2em;
+            font-size: 20px;
+            line-height: 2;
+            color: #fff;
+        }
+
+        .flourish-container {
+            width: 100%;
+            margin: 2rem auto;
+            background-color: transparent;
+            box-shadow: none;
+            border-radius: 12px;
+            box-shadow: none;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            background: #5ec2ff;
+            padding-top: 0;
+            margin-top: 0;
+            min-height: 100vh;
+        }
+
+        .background-container {
+            display: none;
+        }
+
+        .chart-content {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .flex-container {
+                flex-direction: column;
+            }
+            
+            .text-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+        }
+
+        #why-together h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-shadow: none;
+            padding: 1rem;
+            border-bottom: none;
+            font-weight: normal;
+        }
+
+        #why-together .flourish-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 2rem auto;
+            height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            #why-together .flourish-container {
+                width: 100%;
+            }
+        }
+
+        .policy-image {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+        /* 添加小标题和段落的样式 */
+        .section-content h3 {
+            font-size: 35px;
+            color: rgb(252, 220, 173);
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: none;
+            text-align: center;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+            text-indent: 2em;
+            font-size: 25px;
+            line-height: 2;
+            color: #fff;
+        }
+
+        /* 添加四级标题样式 */
+        .section-content h4 {
+            font-size: 30px;
+            color: #7ffef1;
+            margin: 3rem 0 1rem;
+            padding-left: 1rem;
+            border-left: 4px solid #7ffef1;
+        }
+
+        /* 为特定的标题添加额外的上边距 */
+        .section-content h4:first-of-type {
+            margin-top: 4rem;
+        }
+
+        /* 确保achievements部分的图表容器与why-together部分保持一致 */
+        #achievements .flourish-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 2rem auto;
+            height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            #achievements .flourish-container {
+                width: 100%;
+            }
+        }
+
+        /* 添加桥梁图片的样式 */
+        .bridge-image {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 16px;
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+
+
+        /* 添加图片切换效果的样式 */
+        .industry-image-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        /* 修改产业图片样式 */
+        .industry-image {
+            width: 80%; /* 增大图片尺寸 */
+            max-width: 800px; /* 设置最大宽度 */
+            height: auto;
+            display: inline-block;
+            border-radius: 12px;
+            box-shadow: none;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 保留切换效果的样式 */
+        .image-after {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        .industry-image-container:hover .image-after {
+            opacity: 1;
+        }
+
+        /* 统一所有一级标题的样式 */
+        .section-content h2,
+        #why-together .section-content h2,
+        #achievements .section-content h2 {
+            background-image: url('./images/标题背景图.png');
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: "Microsoft YaHei", sans-serif;
+            color: #fff;
+            font-size: 60px;
+            line-height: 200px;
+            text-align: center;
+            text-indent: 0;
+            text-shadow: 3px 3px 15px #00315e;
+            padding: 0;
+            margin: 2rem 0;
+            border: none;
+            font-weight: normal;
+            letter-spacing: 4px;
+        }
+
+        #ending {
+            position: relative;
+            /* padding-bottom: 50vh;
+            margin-bottom: 20vh; */
+        }
+
+        #ending .section-content {
+            background-color: transparent;
+            backdrop-filter: none;
+            transition: background-color 0.3s ease;
+        }
+
+        #ending .section-content:hover {
+            background-color: transparent;
+        }
+
+        footer {
+            position: relative;
+            padding: 1rem;
+            text-align: center;
+            background: transparent;
+            color: #fff;
+        }
+
+        /* 修改全宽图片样式 */
+        .bridge-image.full-width,
+        .policy-image.full-width {
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 2rem 0;
+            border-radius: 0;
+            box-shadow: none;
+            z-index: -1; /* 确保图片在渐变背景之下 */
+        }
+
+        /* 添加容器样式确保图片不会造成水平滚动 */
+        body {
+            overflow-x: hidden;
+        }
+
+        /* 修改全宽图片样式，使其适用于所有full-width类的图片 */
+        .bridge-image.full-width,
+        .policy-image.full-width {
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 2rem 0;
+            border-radius: 0;
+            box-shadow: none;
+            z-index: -1; /* 确保图片在渐变背景之下 */
+        }
+
+        /* 修改渐变容器样式 */
+        .gradient-container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 使用视窗高度 */
+            overflow: hidden;
+            margin: 4rem 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(240, 248, 255, 1) 0%,
+                rgba(240, 248, 255, 0.5) 30%,
+                rgba(240, 248, 255, 0) 100%
+            );
+        }
+
+        /* 修改全宽图片样式 */
+        .bridge-image.full-width,
+        .policy-image.full-width {
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+            z-index: -1; /* 确保图片在渐变背景之下 */
+        }
+
+        /* 修改特殊文字样式 */
+        .highlight {
+            color: rgb(252, 240, 173); 
+        }
+
+        /* 添加滚动渐变效果 */
+        .gradient-overlay {
+            display: none;
+        }
+
+        /* 添加JavaScript来控制渐变效果 */
+
+        /* 修改大标题样式 */
+        .section-content h2 {
+            background-image: url('./images/标题背景图.png');
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: "Microsoft YaHei", sans-serif;
+            color: #fff;
+            font-size: 60px;
+            line-height: 200px;
+            text-align: center;
+            text-indent: 0;
+            text-shadow: 3px 3px 15px #00315e;
+            padding: 0;
+            margin: 2rem 0;
+            border: none;
+            font-weight: normal;
+        }
+
+        /* 确保背景图片路径正确 */
+        /* 删除或注释掉这些重复的样式
+        #why-together h2,
+        #achievements h2 {
+            background-image: url('./images/标题背景图.png');
+        }
+        */
+
+        /* 修改标题和图表之间的间距
+        #bay-history h3 {
+            margin: 0;
+            padding: 0;
+        } */
+
+        /* 修改flourish-embed的样式 */
+        .flourish-embed.flourish-quiz {
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        /* 确保容器不添加额外间距 */
+        #bay-history {
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        /* 调整section的边距 */
+        #bay-history {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 调整flourish-container的上边距 */
+        .flourish-container {
+            margin-top: 0;
+        }
+
+        /* 修改iframe的样式 */
+        .flourish-embed-iframe {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+        }
+
+        /* 移除flourish-credit的边距 */
+        .flourish-credit {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* 移除所有可能的间距 */
+        .section-content > * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 恢复section-content的内边距 */
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4rem; /* 恢复左右内边距 */
+        }
+
+        /* 确保body和html不会限制宽度 */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            scroll-padding-top: 64px; /* 导航栏的高度 */
+        }
+
+        /* 修改图片容器样式 */
+        .full-width-container {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 添加数据突出显示的样式 */
+        .highlight-data {
+            color: rgb(255, 240, 173); /* 使用橙色突出显示 */
+            font-size: 1.2em; /* 字号增大20% */
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="gradient-overlay"></div>
+    <div class="background-container"></div>
+    <nav>
+        <div class="nav-title">Guangdong-Hong Kong-Macao Greater Bay Area at Five</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#header" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#first-paragraph" class="nav-link">Introduction</a>
+            </li>
+            <li class="nav-item">
+                <a href="#why-together" class="nav-link">Reasons</a>
+                <div class="dropdown-menu">
+                    <a href="#bay-history" class="dropdown-item">The Historical Bonds Between Cities</a>
+                    <a href="#bay-present" class="dropdown-item">The Present Opportunities Between Cities</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="#achievements" class="nav-link">Achievements</a>
+                <div class="dropdown-menu">
+                    <a href="#distance" class="dropdown-item">Closer Connections Within the Bay Area</a>
+                    <a href="#happiness" class="dropdown-item">A Brighter Life in the Bay Area</a>
+                    <a href="#identity" class="dropdown-item">A Stronger "Greater Bay Area Community"</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="#ending" class="nav-link">Epilogue</a>
+            </li>
+        </ul>
+    </nav>
+
+    <header id="header">
+        <img src="./images/头图1.png" alt="粤港澳大湾区" class="header-image">
+        <div id="first-paragraph" style="position: absolute; bottom: 0;"></div>
+    </header>
+    
+    <main>
+        <section id="introduction">
+            <div class="section-content">
+                <p class="introduction-paragraph">
+                    As the first rays of sunlight bathe the shimmering waters of the Pearl River Estuary, the Guangdong-Hong Kong-Macao Greater Bay Area celebrates its fifth anniversary. Hong Kong, Macao, and the nine cities of the Pearl River Delta have increasingly fused into a harmonious Bay Area, revealing its profound essence and vast potential. Over the past five years, the Greater Bay Area, occupying less than<span class="highlight-data">1%</span> of the country’s land area and home to just <span class="highlight-data">6%</span> of its population, has generated <span class="highlight-data">11%</span> of the nation's GDP, demonstrating boundless vitality and potential.
+                </p>
+                
+                <p class="introduction-paragraph">
+                    Since 2018, the total economy of the Greater Bay Area has grown from <span class="highlight-data">10.8 trillion</span> yuan to over <span class="highlight-data">14 trillion</span> yuan in 2023, demonstrating a robust growth momentum. This growth is equivalent to having "created a new Shenzhen." Over these five years, the total import and export volume of the nine mainland cities has approached <span class="highlight-data">40 trillion</span> yuan, further underscoring the Greater Bay Area's significant position in the global economy.
+                </p>
+                
+                <div class="flourish-embed flourish-chart" data-src="visualisation/22215548"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22215548/thumbnail" width="100%" alt="chart visualization" /></noscript>
+                </div>
+
+                
+                <p class="introduction-paragraph" style="margin-top: 2.5rem;">
+                    The wheels of history roll forward relentlessly. Though five years may seem brief, they are more than enough to witness the transformation and rise of a region. Today, five years later, it is necessary for us to revisit why the cities of the Greater Bay Area have come together and to reflect on the achievements of the region. Why have these cities converged? It is due to the deep historical connections between them, as well as the present-day opportunities they share. And what has the Greater Bay Area achieved? Over these five years, it has answered this question with dazzling data and compelling stories.
+                </p>
+
+                <p class="introduction-paragraph">
+                    At this milestone moment, we look back on the past, deeply reflect and summarize, gather our strength, and prepare to embrace a future that shines even brighter.
+                </p>
+            </div>
+        </section>
+
+        <section id="why-together">
+            <div class="section-content">
+                <h2>Reasons for Being Together</h2>
+                
+                <section id="bay-history">
+                    <h3>The Historical Bonds Between Cities</h3>
+                </section>
+                <div class="flourish-embed flourish-quiz" data-src="visualisation/22213542"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22213542/thumbnail" width="100%" alt="quiz visualization" /></noscript>
+                </div>
+
+                
+                <p>Over the past five years, Hong Kong, Macao, and the nine cities of the Pearl River Delta have moved towards deep integration in the development of the Guangdong-Hong Kong-Macao Greater Bay Area. However, in fact, during the Ming and Qing dynasties, the Pearl River Delta Bay Area already presented itself to the world as a unified urban landscape. Cities such as Guangzhou, Shenzhen, Hong Kong, Macao, Dongguan, Foshan, Zhongshan, Zhuhai, and Jiangmen once together formed a magnificent city — the Guangzhou Prefecture.</p>
+                
+                <img src="./images/政策2.png" alt="大湾区政策" class="bridge-image full-width" style="padding-left: 10%; padding-right: 10%;">
+                
+                <br>
+                
+                <p>During the Ming and Qing dynasties, Guangzhou Prefecture was renowned for its unique economic position. The Gazetteer of Guangzhou Prefecture describes its prosperity with the words: "The rivers and mountains are clear and bright, and the brilliance of its culture shines. The capital city is flourishing, with abundant resources." Its economic policies were equally distinctive. The Gazetteer of Guangzhou Prefecture even has a dedicated section on the salt administration, documenting the trade of sea salt in Guangzhou, which reflects the special economic status of Guangzhou Prefecture during that era.</p>
+
+                <section id="bay-present">
+                    <h3>The Present Opportunities Between Cities</h3>
+                    <p>After extensive deliberation, China has established the development of the Guangdong-Hong Kong-Macao Greater Bay Area as a national strategy, unveiling a series of policies to support this initiative. The goal is to promote the deep integration of Hong Kong, Macao, and the nine cities of the Pearl River Delta, working together to contribute to the grand objective of achieving the great rejuvenation of the Chinese nation.</p>
+                    <img src="./images/政策1.png" alt="大湾区政策" class="bridge-image full-width" style="padding-left: 10%; padding-right: 10%;">
+                    <br>
+                    <p>After experiencing the rise and fall of history, the cities of the Bay Area have once again encountered new opportunities. With these opportunities now converging, the Bay Area is poised to stand at the forefront of progress.</p>
+                </section>
+            </div>
+        </section>
+
+        <section id="achievements">
+            <div class="section-content">
+                <h2>Achievements in Progress</h2>
+                
+                <section id="distance">
+                    <h3>Closer Connections Within the Bay Area</h3>
+                    
+                    <h4>Shorter Distances for Transport and Daily Life</h4>
+                    <p class="introduction-paragraph">
+                        With the accelerated development of infrastructure in the Guangdong-Hong Kong-Macao Greater Bay Area, regional transportation connectivity has greatly improved, gradually reducing physical distances. Since 2018, the railway network in Guangdong Province has expanded from <span class="highlight-data">28</span> lines to <span class="highlight-data">41</span>, with total mileage increasing from <span class="highlight-data">885</span> kilometers to <span class="highlight-data">1,383</span> kilometers. A three-tier network, consisting of national railways, intercity railways, and urban rail transit, has been established. The current and under-construction lines exceed <span class="highlight-data">5,400</span> kilometers, and future plans aim to surpass <span class="highlight-data">10,000</span> kilometers.
+                    </p>
+                    <div class="flourish-embed flourish-chart" data-src="visualisation/22215612"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22215612/thumbnail" width="100%" alt="chart visualization" /></noscript>
+                    </div>
+
+
+                    <p class="introduction-paragraph">
+                        In terms of the construction of cross-river and cross-sea passages, several major bridges have been put into use, including the Hong Kong-Zhuhai-Macao Bridge, which opened in 2018, the Nansha Bridge, which opened in 2019, the Shenzhen-Zhongshan Link, set to open in 2024, and the Huangmaohai Cross-Sea Passage. The Hong Kong-Zhuhai-Macao Bridge has shortened the distance from Zhuhai to Hong Kong by <span class="highlight-data">69%</span>; the Nansha Bridge has reduced the travel time from Guangzhou to Dongguan by <span class="highlight-data">26%</span>; the Shenzhen-Zhongshan Link will cut the travel time from Zhongshan to Shenzhen by <span class="highlight-data">76%</span>; and the Huangmaohai Cross-Sea Passage has reduced the travel time from Jiangmen to Zhuhai by <span class="highlight-data">48%</span>. The Greater Bay Area's "one-hour living circle" is accelerating into reality.
+                    </p>
+                </div>
+
+                <img src="./images/大桥浅色.png" alt="大湾区跨海大桥" style="width: 70vw; max-width: 100vw; position: relative; left: 50%; transform: translateX(-50%); margin: 2rem 0; border-radius: 0; box-shadow: none;">
+
+                <div class="section-content">
+                    <h4>Shorter Distances for Industry Collaboration and Innovation</h4>
+                    <p class="introduction-paragraph">
+                        From 2018 to 2022, the Guangdong-Hong Kong-Macao Greater Bay Area made significant strides in technology and economic development, with industry collaboration and innovation becoming increasingly interconnected.
+                    </p>
+
+                    <p class="introduction-paragraph">
+                        Research and development investment grew from <span class="highlight-data">224.8 billion</span> yuan in 2018 to <span class="highlight-data">426.9 billion</span> yuan in 2022, demonstrating the area's ongoing emphasis on and support for technological innovation. Meanwhile, the number of patent grants increased from over <span class="highlight-data">380,000</span> in 2018 to over <span class="highlight-data">760,000</span> in 2022. This growth not only reflects the vibrancy of innovation activities but also highlights the progress the Greater Bay Area has made in intellectual property protection and utilization.
+                    </p>
+
+                    <div style="display: flex;">
+                        <div class="flourish-embed flourish-hierarchy" data-src="visualisation/22215643"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22215643/thumbnail" width="100%" alt="hierarchy visualization" /></noscript>
+                        </div>
+                            
+                        <div class="flourish-embed flourish-hierarchy" data-src="visualisation/22215680"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22215680/thumbnail" width="100%" alt="hierarchy visualization" /></noscript>
+                        </div>
+                    </div>
+                    
+
+
+                    <br>
+                    <p class="introduction-paragraph">
+                        The deep collaboration in industrial chains and the coordinated development of enterprises within the Guangdong-Hong Kong-Macao Greater Bay Area are driving increasingly close economic ties across the region. The Greater Bay Area has formed three major industrial clusters:
+                        <br>1. <span class="highlight-data">The eastern bank of the Pearl River</span>, with Shenzhen and Dongguan at its core, leverages high-tech industries and advanced manufacturing to drive technological innovation.
+                        <br>2. <span class="highlight-data">The Guangzhou-Foshan-Zhaoqing region</span> utilizes its traditional industrial strengths while transforming towards higher value-added industries, showcasing the potential for industrial upgrading.
+                        <br>3. <span class="highlight-data">The Zhuhai-Zhongshan-Jiangmen cluster</span> optimizes its industrial layout through transportation hubs, promoting industrial agglomeration in cities like Zhuhai and Zhongshan.
+                    </p>
+                    <p class="introduction-paragraph">
+                        This cross-regional collaboration fosters the efficient flow of resources and provides vital support for the economic integration of the region.<br>
+                    </p>
+
+                    <p style="text-align: center; color: #268cfa; font-size: 1rem; margin: 1rem 0;">Hover over the image to view industrial transformation</p>
+
+                    <div class="industry-image-container">
+                        <img src="./images/产业before.png" alt="大湾区产业布局前" class="industry-image image-before">
+                        <img src="./images/产业after.png" alt="大湾区产业布局后" class="industry-image image-after">
+                    </div>
+                    <br>
+                    <p class="introduction-paragraph">
+                        Technology-driven innovation has provided strong momentum for industrial upgrading and corporate collaboration. The number of national high-tech enterprises in Guangdong Province increased from <span class="highlight-data">45,000</span> in 2018 to <span class="highlight-data">75,000</span> in 2023, maintaining the national lead for <span class="highlight-data">8</span> consecutive years. This has driven comprehensive collaboration across the entire industrial chain. At the same time, the number of unicorn enterprises rose from <span class="highlight-data">35</span> in 2019 to <span class="highlight-data">70</span>, covering various sectors such as electronic information, smart home appliances, and green petrochemicals. These companies not only highlight the Greater Bay Area's significant position in global innovation but also foster deeper collaboration within regional industrial chains, contributing to the high-quality development of the "8372" strategic industrial clusters.
+                    </p>
+
+                    <div class="flourish-embed flourish-bubble-chart" data-src="visualisation/22215719"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22215719/thumbnail" width="100%" alt="bubble-chart visualization" /></noscript>
+                    </div>
+
+
+                    <br>
+                    <h4>Shorter Distances for Ecology</h4>
+                    <p class="introduction-paragraph">
+                        The rapid development of the Guangdong-Hong Kong-Macao Greater Bay Area has significantly strengthened environmental collaboration, continuously shrinking the ecological distance between regions. Green infrastructure has become a cornerstone of progress, with energy-efficient buildings and green transportation networks driving advancements in regional sustainability.
+                    </p>
+
+                    <p class="introduction-paragraph">
+                        For example, cities like Zhuhai and Shenzhen have actively promoted the construction of green buildings and energy systems, while Guangzhou has seen a steady rise in its green mobility index. Cross-border environmental governance has also been enhanced, with pollution control projects in the Pearl River water system transcending administrative boundaries between Guangdong Province and Macao. Local governments and enterprises have collaborated on transboundary initiatives to address water pollution.
+                    </p>
+
+                    <img src="./images/环境.png" style="width: 70vw; max-width: 100vw; position: relative; left: 50%; transform: translateX(-50%); border-radius: 0; box-shadow: none; margin-bottom: 20px;">
+                    <p class="introduction-paragraph">
+                        In 2023, data from the Pearl River Delta Regional Air Monitoring Network showed significant reductions in air pollutants, including sulfur dioxide, nitrogen dioxide, carbon monoxide, PM10, and PM2.5. Annual average concentrations of these pollutants dropped by up to <span class="highlight-data">86%</span> compared to historical peaks. Meanwhile, the Greater Bay Area has made notable progress in green energy adoption, with clean energy now accounting for over <span class="highlight-data">30%</span> of total energy consumption in 2023. These efforts have not only improved regional ecological quality but also laid a strong foundation for harmonious coexistence between humans and nature.
+                    </p>
+                </div>
+
+                <div class="section-content">
+                    <section id="happiness">
+                        <h3>A Brighter Life in the Bay Area</h3>
+                        
+                        <p class="introduction-paragraph">
+                            As the development of the Greater Bay Area accelerates, a series of policies in cross-border healthcare, education, and mutual recognition of professional qualifications have been implemented, significantly enhancing the convenience and quality of life for residents in the region.
+                        </p>
+                        
+                        <div class="flourish-embed flourish-hierarchy" data-src="visualisation/22213803"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22213803/thumbnail" width="100%" alt="hierarchy visualization" /></noscript>
+                        </div>
+
+
+                        <h4>A Happier Learning Experience in the Bay Area</h4>
+                        <p class="introduction-paragraph">
+                            In the field of education, a vibrant landscape of shared resources and collaborative talent cultivation is unfolding across the Greater Bay Area. In higher education, institutions such as Hong Kong and Macao’s leading universities have pioneered the establishment of branch campuses or joint ventures in the region, while mainland universities like Shenzhen University and Sun Yat-sen University have extended their research institutes to Hong Kong and Macao. Beyond higher education, cooperation in basic education is deepening. The availability of high-quality educational resources in cities like Guangzhou and Shenzhen has attracted a growing number of students from Hong Kong and Macao. In 2023 alone, over <span class="highlight-data">80,000</span> Hong Kong and Macao students were enrolled in primary and secondary schools in Guangdong.
+                        </p>
+
+                        <h4>Comprehensive Protection for Bay Area Residents</h4>
+                        <p class="introduction-paragraph">
+                            In healthcare and social security, cross-border integration has provided residents with more comprehensive safeguards. Over <span class="highlight-data">300,000</span> residents from Hong Kong and Macao have enrolled in Guangdong’s social insurance programs—including old-age, unemployment, and work-related injury insurance—enjoying equal access to healthcare and welfare benefits as mainland residents. Cross-border medical insurance collaboration has also expanded, with Guangdong’s hospitals and those in Hong Kong and Macao improving reimbursement rates and coverage for residents seeking medical care on the mainland.
+                        </p>
+
+                        <p class="introduction-paragraph">
+                            Additionally, the Greater Bay Area has introduced policies to enhance elderly care for cross-border residents. In 2023, over <span class="highlight-data">200,000</span> Hong Kong and Macao residents accessed elderly care services in Guangdong, further solidifying the region’s support for seamless cross-border living and bolstering residents’ sense of well-being.
+                        </p>
+
+                        <div class="flourish-embed flourish-map" data-src="visualisation/20946643"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/20946643/thumbnail" width="100%" alt="map visualization" /></noscript>
+                        </div>
+                    
+                        <h4>Safer, Greener Diets for All</h4>
+                        <p class="introduction-paragraph">
+                            In the realm of food security, the Guangdong-Hong Kong-Macao Greater Bay Area’s "Basket Program"（"菜篮子"工程）has provided residents with greater access to safe, high-quality, and eco-friendly food. Under the 2019 "Implementation Plan for the Construction of the Guangdong-Hong Kong-Macao Greater Bay Area 'Basket'"（《粤港澳大湾区“菜篮子”建设实施方案》） released by Guangzhou, the city has certified <span class="highlight-data">2,422</span> "Basket" production bases nationwide. These bases cover a wide range of agricultural products, including vegetables, fruits, meat, and aquatic products, ensuring a steady supply of fresh, premium ingredients for Bay Area residents.
+                        </p>
+                        <p class="introduction-paragraph">
+                            A key innovation is the <span class="highlight-data">"Green Channel"</span> initiative, which has dramatically boosted the logistics efficiency and freshness of agricultural products. By streamlining transportation and distribution processes, the initiative guarantees both food safety and nutritional integrity, addressing critical concerns for consumers.
+                        </p>
+
+
+    
+                        <div class="flourish-embed flourish-pictogram" data-src="visualisation/22214320"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22214320/thumbnail" width="100%" alt="pictogram visualization" /></noscript>
+                        </div>                          
+                        <br>
+                
+                        <p class="introduction-paragraph">
+                            With the implementation of these policies, the quality of services in key livelihood sectors such as healthcare, housing, and education has significantly improved. Hong Kong and Macao youth are increasingly integrating into the Greater Bay Area, with the number of such young professionals working in Guangdong now exceeding 200,000. By continuously refining policy mechanisms, the Guangdong-Hong Kong-Macao Greater Bay Area has created a more convenient and livable cross-border living environment for its residents. These efforts have injected new momentum into regional integration, further strengthening residents’ sense of happiness and belonging.
+                        </p>
+
+                        <div class="flourish-embed flourish-chart" data-src="visualisation/22231868"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22231868/thumbnail" width="100%" alt="chart visualization" /></noscript>
+                        </div>
+                </section>
+                   
+                <section id="identity">
+                    <br>
+                    <br>
+                    <h3> A Stronger "Greater Bay Area Community"</h3>
+                    <p class="introduction-paragraph">
+                        As the Guangdong-Hong Kong-Macao Greater Bay Area becomes increasingly integrated, more residents across the region’s cities identify with the area’s development vision and embrace a stronger sense of belonging as part of a unified "Greater Bay Area community." According to a survey by the Hong Kong Guangdong Youth Development Association, Hong Kong youth are growing more optimistic about career opportunities in mainland cities within the Greater Bay Area.
+                    </p>
+
+                    <div class="flourish-embed flourish-chart" data-src="visualisation/22214119"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22214119/thumbnail" width="100%" alt="chart visualization" /></noscript>
+                    </div>
+
+                    <p class="introduction-paragraph">
+                        With the deepening integration of the Guangdong-Hong Kong-Macao Greater Bay Area, cultural exchanges have become increasingly frequent beyond economic development. In addition to the annual The Greater Bay Area Film Concert , more programs featuring Bay Area elements have entered the public eye. For instance, Endless Melody , a music competition co-produced by Mango TV and Hunan Satellite TV, has become a cultural highlight. The latest season, Endless Melody (Sr.4), focused on amplifying the unique musical identity of the Greater Bay Area , achieved an unprecedented heat index of <span class="highlight-data">9,853.83</span> on its first day , surpassing previous records and establishing itself as a new benchmark in music that bridges hearts and sets trends.
+                    </p>
+
+                    <p class="introduction-paragraph">
+                        Furthermore, individuals are increasingly expressing their identification with the "Greater Bay Area identity" through actions and words, actively participating in shaping a shared cultural and social identity within the region.
+                    </p>
+
+                    
+                    
+                    <div style="display: flex;">
+                        <img src="./images/feima.gif" style="height:400px; width: 300px; margin-right: 1rem;">
+                        <p class="introduction-paragraph">
+                            On the morning of March 7, 2023, Pansy Ho, a Macao-based CPPCC member, stated during the 14th CPPCC National Session:
+                            <span class="highlight-data">"Some say I'm Macanese, others call me a Hong Konger—but I am a Greater Bay Area person."</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Expressing deep ties to the region, Maria Cordeiro ("Fat Mama") affirmed:<span class="highlight-data">"The Greater Bay Area offers vast opportunities—my choice was right!"</span>
+                        </p>
+                    </div>
+
+                    <p class="introduction-paragraph">
+                        The shift in terminology from "Hong Kong residents" and "Macao residents" to "Greater Bay Area residents" reflects a profound transformation in identity. As the Guangdong-Hong Kong-Macao Greater Bay Area becomes increasingly integrated, a more united "Greater Bay Area community" is moving forward hand in hand toward the future!
+                    </p>
+                </section>
+            </section>
+        </div>
+    </section>
+
+    <section id="ending">
+        <div class="section-content">
+            <h2>Epilogue</h2>
+            <p class="introduction-paragraph">
+                As the stars of the night fade into dawn, the Guangdong-Hong Kong-Macao Greater Bay Area has traversed five years under the golden light of morning. For this vibrant land, five years are both a testament to time and a microcosm of progress. Every city, every street, and every laborer here has witnessed this grand transformation.
+            </p>
+
+            <p class="introduction-paragraph">
+                The wheels of history roll forward, and in the boundless river of time, five years may seem but a fleeting moment. Yet at this milestone juncture, we must reflect on why we came together, what we have achieved, and then rally anew. On this new historical starting point, the Greater Bay Area will continue to deepen reform and opening-up, strengthen regional collaboration, and advance innovation-driven development, contributing its strength to the great rejuvenation of the Chinese nation and the Chinese Dream.
+            </p>
+
+            <p class="introduction-paragraph">
+                We have every reason to believe that the future of the Greater Bay Area will shine even brighter, becoming a global exemplar of world-class urban clusters. Just as the Pearl River Estuary glistens in the dawn, it heralds a future brimming with hope.
+            </p>
+
+            <!-- <img src="images/标题背景图.png" alt="尾声晨曦" style="width: 100vw; max-width: 100vw; position: relative; left: 50%; transform: translateX(-50%); margin: 2rem 0; border-radius: 0; box-shadow: none;"> -->
+        </div>
+    </section>
+
+    <footer style="background-image: url('images/尾图.png'); background-size: cover; background-position: center;">
+        <img src="images/SYSU.png" loading="lazy" width="469" sizes="(max-width: 479px) 100vw, 469px"><br>
+        <!-- <img src="images/SYSUJC.jpg" loading="lazy" width="469" sizes="(max-width: 479px) 100vw, 469px"> -->
+        <p style="line-height: 30px;">Team Members:Duanwei Gu, Xinchun Li, Han Zhang, Yang Zhang, Fangyan Zhou<br>Advisor:Shujin Lin<br>School of Journalism and Communication, Sun Yat-sen University<br>All images and visual materials used in this work were created by the team.<br>‍</p>
+    </footer>
+</main>
+</body>
+</html> 
